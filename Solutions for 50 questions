@@ -1,0 +1,69 @@
+# 1.Recyclable and Low Fat Products
+select product_id from Products
+where low_fats='Y' and recyclable='Y'
+
+#2.Find Customer Referee
+select name from Customer
+where referee_id not in(2) or referee_id is null
+
+#3.Big Countries
+select name,population,area from World
+where area>=3000000 or population>=25000000
+
+#4.Article Views I
+select DISTINCT author_id AS id from Views
+where author_id =viewer_id 
+order by author_id
+
+#5. Invalid Tweets
+select DISTINCT author_id AS id from Views
+where author_id =viewer_id 
+order by author_id
+
+# 6.Replace Employee ID With The Unique Identifier
+select EI.unique_id,E.name from 
+Employees E LEFT join EmployeeUNI EI
+on E.id=EI.id
+
+# 7. Product Sales Analysis 
+select P.product_name,S.year,S.price
+from Product P join Sales S
+on P.product_id =S.product_id 
+
+# 8.Customer Who Visited but Did Not Make Any Transactions
+select V.customer_id, COUNT(V.visit_id) as count_no_trans from
+Visits V LEFT join  Transactions T
+on V.visit_id=T.visit_id
+WHERE T.transaction_id is null
+group by V.customer_id
+
+#9.Rising Temperature
+select W1.id 
+from Weather W1, Weather W2
+where W1.temperature>W2.temperature and  DATEDIFF(w1.recordDate, w2.recordDate) = 1
+
+#10.Average Time of Process per Machine
+select W1.id 
+from Weather W1, Weather W2
+where W1.temperature>W2.temperature and  DATEDIFF(w1.recordDate, w2.recordDate) = 1
+
+#11.Employee Bonus
+select E.name,B.bonus from 
+Employee E left join Bonus B 
+on E.empId=B.empID
+where B.bonus<1000 or B.bonus is null
+
+#12.Students and Examinations
+select S.student_id,
+S.student_name,
+Su.subject_name,
+COUNT(E.student_id) as attended_exams
+from Students S CROSS JOIN Subjects Su
+LEFT JOIN Examinations E
+ON  S.student_id = E.student_id and 
+Su.subject_name=E.subject_name
+group by S.student_id,S.student_name,Su.subject_name
+ORDER BY s.student_id, Su.subject_name;
+
+
+
